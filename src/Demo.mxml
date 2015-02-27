@@ -1,43 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
                xmlns:s="library://ns.adobe.com/flex/spark"
-               xmlns:local="*">
+               xmlns:local="*"
+			   initialize="appInitHandler(event)">
 
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		@namespace mx "library://ns.adobe.com/flex/mx";
+		/* Remove the drag cursors */
+		mx|DragManager {
+			moveCursor: Embed('1x1.gif');
+			copyCursor: Embed('1x1.gif');
+			rejectCursor: Embed('1x1.gif');
+			linkCursor: Embed('1x1.gif');
+		}
+	</fx:Style>
+	
     <fx:Script>
         <![CDATA[
-            import mx.collections.ArrayList;
-            private function createDataProvider(n:int = 100):ArrayList
+			import mx.collections.ArrayList;
+			import mx.events.FlexEvent;
+			
+			private var leftListSource : ArrayList;
+			
+			[Bindable]
+			private var rightListSource : ArrayList;
+			
+            private function createDataProvider():ArrayList
             {
-                var a:Array = new Array(n);
-                for (var i:int = 0; i < n; i++)
-                    a[i] = "Draggable Item " + i;
+                var a:Array = new Array();
+                a.push("close but no cigar");
+				a.push("at the eleventh hour");
+				a.push("that's the ticket");
                 
                 return new ArrayList(a);
             }
-            import spark.components.CheckBox;
-        ]]>
+			
+			protected function appInitHandler(event:FlexEvent):void
+			{
+				rightListSource = new ArrayList(new Array("at the last minute", "correct answer or idea", "not quite"));
+				
+			}
+			
+		]]>
     </fx:Script>
     
-    <fx:Style>
-        @namespace s "library://ns.adobe.com/flex/spark";
-        @namespace mx "library://ns.adobe.com/flex/mx";
-        /* Remove the drag cursors */
-        mx|DragManager {
-            moveCursor: Embed('1x1.gif');
-            copyCursor: Embed('1x1.gif');
-            rejectCursor: Embed('1x1.gif');
-            linkCursor: Embed('1x1.gif');
-        }
-    </fx:Style>
-    
-    <s:List id="myList" width="100%" height="100%"
-            dragEnabled="true" dropEnabled="true" dragMoveEnabled="true"
-            dataProvider="{createDataProvider()}">
-        <s:itemRenderer>
-            <fx:Component>
-                <local:DraggableIconItemRenderer decorator="{DragThumb}" />
-            </fx:Component>
-        </s:itemRenderer>
-    </s:List>
-    
+
+	<s:VGroup paddingLeft="20" paddingRight="20" paddingTop="40" horizontalAlign="center" >
+		<s:Label text="Match each idiom with its meaning" />
+	    <s:HGroup width="100%" paddingTop="20" >
+			
+		    <s:List id="myList" 
+					width="300" 
+					borderColor="#3A3A9A"
+					borderVisible="true"
+		            dragEnabled="true" 
+					dropEnabled="true" 
+					dragMoveEnabled="true"
+		            dataProvider="{createDataProvider()}">
+		        <s:itemRenderer>
+		            <fx:Component>
+		                <local:DraggableIconItemRenderer decorator="{DragThumb}" />
+		            </fx:Component>
+		        </s:itemRenderer>
+		    </s:List>
+			<s:Spacer width="60" />
+			<s:VGroup>
+				<s:List id="destlist" width="300" height="100%"
+						borderColor="#3A3A9A"
+						borderVisible="true"
+						dropEnabled="true"
+						dragEnabled="true"
+						dragMoveEnabled="true"
+						dataProvider="{rightListSource}">
+					<s:itemRenderer>
+						<fx:Component>
+							<local:DraggableIconItemRenderer decorator="{DragThumb}" />
+						</fx:Component>
+					</s:itemRenderer>
+				</s:List>
+			</s:VGroup>
+		</s:HGroup>
+	</s:VGroup>
+
 </s:Application>
