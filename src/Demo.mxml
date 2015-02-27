@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+               xmlns:s="library://ns.adobe.com/flex/spark"
+               xmlns:local="*">
+
+    <fx:Script>
+        <![CDATA[
+            import mx.collections.ArrayList;
+            private function createDataProvider(n:int = 100):ArrayList
+            {
+                var a:Array = new Array(n);
+                for (var i:int = 0; i < n; i++)
+                    a[i] = "Draggable Item " + i;
+                
+                return new ArrayList(a);
+            }
+            import spark.components.CheckBox;
+        ]]>
+    </fx:Script>
+    
+    <fx:Style>
+        @namespace s "library://ns.adobe.com/flex/spark";
+        @namespace mx "library://ns.adobe.com/flex/mx";
+        /* Remove the drag cursors */
+        mx|DragManager {
+            moveCursor: Embed('1x1.gif');
+            copyCursor: Embed('1x1.gif');
+            rejectCursor: Embed('1x1.gif');
+            linkCursor: Embed('1x1.gif');
+        }
+    </fx:Style>
+    
+    <s:List id="myList" width="100%" height="100%"
+            dragEnabled="true" dropEnabled="true" dragMoveEnabled="true"
+            dataProvider="{createDataProvider()}">
+        <s:itemRenderer>
+            <fx:Component>
+                <local:DraggableIconItemRenderer decorator="{DragThumb}" />
+            </fx:Component>
+        </s:itemRenderer>
+    </s:List>
+    
+</s:Application>
