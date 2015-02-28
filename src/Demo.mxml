@@ -2,7 +2,9 @@
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
                xmlns:s="library://ns.adobe.com/flex/spark"
                xmlns:local="*"
-			   initialize="appInitHandler(event)">
+			   initialize="appInitHandler(event)"
+			   applicationDPI="240"
+			   >
 
 	<fx:Style>
 		@namespace s "library://ns.adobe.com/flex/spark";
@@ -51,7 +53,7 @@
 	    <s:HGroup width="100%" paddingTop="20" >
 			
 		    <s:List id="myList" 
-					width="300" 
+					width="400" 
 					borderColor="#3A3A9A"
 					borderVisible="true"
 		            dragEnabled="true" 
@@ -66,7 +68,7 @@
 		    </s:List>
 			<s:Spacer width="60" />
 			<s:VGroup>
-				<s:List id="destlist" width="300" height="100%"
+				<s:List id="destlist" width="400" height="100%"
 						borderColor="#3A3A9A"
 						borderVisible="true"
 						dropEnabled="true"
