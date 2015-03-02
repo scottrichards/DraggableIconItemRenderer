@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+		title="MatchingView"
+		initialize="initializeHandler(event)" xmlns:local="*">
+	<s:layout>
+		<s:VerticalLayout/>
+	</s:layout>
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		@namespace mx "library://ns.adobe.com/flex/mx";
+		/* Remove the drag cursors */
+		mx|DragManager {
+			moveCursor: Embed('1x1.gif');
+			copyCursor: Embed('1x1.gif');
+			rejectCursor: Embed('1x1.gif');
+			linkCursor: Embed('1x1.gif');
+		}
+	</fx:Style>
+	
+	<fx:Script>
+		<![CDATA[
+			import spark.layouts.supportClasses.DropLocation;
+			import mx.collections.ArrayList;
+			import mx.events.DragEvent;
+			import mx.events.FlexEvent;
+			import mx.managers.DragManager;
+			
+				
+			// Variable to store original border color.
+			private var tempBorderColor:uint;
+			
+			// Flag to indicate that tempBorderColor has been set.
+			private var borderColorSet:Boolean = false;
+			
+			[Bindable]
+			private var leftListSource : ArrayList;
+			[Bindable]
+			private var rightListSource : ArrayList;
+			[Bindable]
+			private var separatorListSource : ArrayList;
+			
+			private function createDataProvider():ArrayList
+			{
+				var a:Array = new Array();
+				a.push("close but no cigar");
+				a.push("at the eleventh hour");
+				a.push("that's the ticket");
+				
+				return new ArrayList(a);
+			}
+			
+			protected function initializeHandler(event:FlexEvent):void
+			{
+				leftListSource =  new ArrayList(new Array("close but no cigar", "at the eleventh hour", "that's the ticket"));
+				rightListSource = new ArrayList(new Array("at the last minute", "correct answer or idea", "not quite"));
+				separatorListSource = new ArrayList(new Array("<----->", "<----->", "<----->"));
+				
+			}
+			
+//			protected function dragExitHandler(event:DragEvent):void
+//			{
+//				event.preventDefault();
+//				trace("dragExitHandler");
+//			}
+			
+			// Restore the border color.
+			private function dragExitHandler(event:DragEvent):void {
+				event.currentTarget.setStyle('borderColor', tempBorderColor);
+				borderColorSet = true;
+			}
+			
+			private function dragOverHandler(event:DragEvent):void {
+				
+				// Explpicitly handle the dragOver event.            
+				event.preventDefault();
+				
+				// Since you are explicitly handling the dragOver event,
+				// call showDropIndicator() to have the drop target
+				// display the drop indicator.
+				// The drop indicator is removed
+				// automatically for the list controls by the built-in 
+				// event handler for the dragDrop event.
+				var dropLocal:DropLocation = 
+					event.currentTarget.layout.calculateDropLocation(event);
+				event.currentTarget.layout.showDropIndicator(dropLocal);
+			
+				// if the drag initiated from anything other than the current list prevent it (we only allow moving items within the current list)
+				if (event.dragInitiator.name != event.currentTarget.name) {
+					// Drag not allowed.
+					DragManager.showFeedback(DragManager.NONE); 
+				} else {
+					DragManager.showFeedback(DragManager.MOVE);
+				}              
+			}
+			
+
+			
+		]]>
+	</fx:Script>
+	
+	
+	<s:VGroup paddingLeft="20" paddingRight="20" paddingTop="40" horizontalAlign="center" >
+		<s:Label text="Match each idiom with its meaning" />
+		<s:HGroup width="100%" paddingTop="20" >
+			
+			<s:List id="myList" 
+					name="leftList"
+					width="400" 
+					borderColor="#3A3A9A"
+					borderVisible="true"
+					dragEnabled="true" 
+					dropEnabled="true"
+					dragMoveEnabled="true"
+					dragExit="dragExitHandler(event)"
+					dragOver="dragOverHandler(event);"
+					dataProvider="{leftListSource}">
+				<s:itemRenderer>
+					<fx:Component>
+						<local:DraggableIconItemRenderer decorator="{DragThumb}" />
+					</fx:Component>
+				</s:itemRenderer>
+			</s:List>
+			<s:Spacer width="10" /> 
+			<s:List
+				id="separator"
+				dataProvider="{separatorListSource}">
+			</s:List>
+			<s:Spacer width="10" /> 
+			<s:VGroup>
+				<s:List id="destlist" width="400" height="100%"
+						name="rightList"
+						borderColor="#3A3A9A"
+						borderVisible="true"
+						dropEnabled="true"
+						dragEnabled="true"
+						dragMoveEnabled="true"
+						dragExit="dragExitHandler(event)"
+						dataProvider="{rightListSource}"
+						dragOver="dragOverHandler(event);"
+						>
+					<s:itemRenderer>
+						<fx:Component>
+							<local:DraggableIconItemRenderer decorator="{DragThumb}" />
+						</fx:Component>
+					</s:itemRenderer>
+				</s:List>
+			</s:VGroup>
+		</s:HGroup>
+
+	</s:VGroup>
+</s:View>

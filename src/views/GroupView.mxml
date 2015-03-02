@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+		title="MatchingView"
+		initialize="initializeHandler(event)" xmlns:local="*">
+	<s:layout>
+		<s:VerticalLayout/>
+	</s:layout>
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		@namespace mx "library://ns.adobe.com/flex/mx";
+		/* Remove the drag cursors */
+		mx|DragManager {
+			moveCursor: Embed('1x1.gif');
+			copyCursor: Embed('1x1.gif');
+			rejectCursor: Embed('1x1.gif');
+			linkCursor: Embed('1x1.gif');
+		}
+	</fx:Style>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayList;
+			import mx.events.FlexEvent;
+			
+			private var leftListSource : ArrayList;
+			
+			[Bindable]
+			private var rightListSource : ArrayList;
+			
+			[Bindable]
+			private var dragSourceList : ArrayList;
+			
+			private function createDataProvider():ArrayList
+			{
+				var a:Array = new Array();
+				a.push("close but no cigar");
+				a.push("at the eleventh hour");
+				a.push("that's the ticket");
+				
+				return new ArrayList(a);
+			}
+			
+			protected function initializeHandler(event:FlexEvent):void
+			{
+				rightListSource = new ArrayList(new Array("at the last minute", "correct answer or idea", "not quite"));
+				dragSourceList = new ArrayList(new Array("inside","often","yesterday","there","daily","always","away","near","later","behind"));
+			}
+			
+		]]>
+	</fx:Script>
+	
+	
+	<s:VGroup paddingLeft="20" paddingRight="20" paddingTop="40" horizontalAlign="center" >
+		<s:Label text="Drag the adverbs to the correct list" paddingBottom="20" />
+
+		<s:List dataProvider="{dragSourceList}"
+				dragEnabled="true"
+				dropEnabled="true">
+			<s:layout>
+				<s:TileLayout requestedColumnCount="5"
+							  requestedRowCount="2"
+							  horizontalGap="10"
+							  verticalGap="5" />
+			</s:layout>
+			<s:itemRenderer>
+				<fx:Component>
+					<local:DraggableIconItemRenderer decorator="{DragThumb}" />
+				</fx:Component>
+			</s:itemRenderer>
+		</s:List>
+
+		<s:HGroup width="100%" paddingTop="20" >
+			<s:VGroup>
+				
+				<s:Label text="When" />
+				<s:List id="myList" 
+						width="400" 
+						borderColor="#3A3A9A"
+						borderVisible="true"
+						dragEnabled="true" 
+						dropEnabled="true" 
+						dragMoveEnabled="true"
+						dataProvider="{createDataProvider()}">
+					<s:itemRenderer>
+						<fx:Component>
+							<local:DraggableIconItemRenderer decorator="{DragThumb}" />
+						</fx:Component>
+					</s:itemRenderer>
+				</s:List>
+			</s:VGroup>
+			<s:Spacer width="60" />
+			<s:VGroup>
+				<s:Label text="Where" />
+				<s:List id="destlist" width="400" height="100%"
+						borderColor="#3A3A9A"
+						borderVisible="true"
+						dropEnabled="true"
+						dragEnabled="true"
+						dragMoveEnabled="true"
+						dataProvider="{rightListSource}">
+					<s:itemRenderer>
+						<fx:Component>
+							<local:DraggableIconItemRenderer decorator="{DragThumb}" />
+						</fx:Component>
+					</s:itemRenderer>
+				</s:List>
+			</s:VGroup>
+		</s:HGroup>
+
+	</s:VGroup>
+</s:View>
