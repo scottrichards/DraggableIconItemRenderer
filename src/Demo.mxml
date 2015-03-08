@@ -4,6 +4,7 @@
                xmlns:local="*"
 			   initialize="appInitHandler(event)"
 			   applicationDPI="240"
+			   width="100%"
 			   >
 	<fx:Script>
 		<![CDATA[
@@ -18,7 +19,8 @@
 		]]>
 	</fx:Script>
 
-	<s:ViewNavigator label="Matching" firstView="views.MatchingView" />
+	<s:ViewNavigator label="Match" firstView="views.MatchingView" />
 	<s:ViewNavigator label="Group" firstView="views.GroupView" />
+	<s:ViewNavigator label="Sort" firstView="views.SortView" />
   
 </s:TabbedViewNavigatorApplication>

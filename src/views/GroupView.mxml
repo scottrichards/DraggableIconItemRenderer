@@ -2,7 +2,9 @@
 <s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		xmlns:s="library://ns.adobe.com/flex/spark" 
 		title="MatchingView"
-		initialize="initializeHandler(event)" xmlns:local="*">
+		initialize="initializeHandler(event)" 
+		xmlns:local="*"
+		width="100%">
 	<s:layout>
 		<s:VerticalLayout/>
 	</s:layout>
@@ -56,7 +58,10 @@
 
 		<s:List dataProvider="{dragSourceList}"
 				dragEnabled="true"
-				dropEnabled="true">
+				dropEnabled="true"
+				width="100%"
+				height="100%"
+				>
 			<s:layout>
 				<s:TileLayout requestedColumnCount="5"
 							  requestedRowCount="2"
@@ -81,7 +86,7 @@
 						dragEnabled="true" 
 						dropEnabled="true" 
 						dragMoveEnabled="true"
-						dataProvider="{createDataProvider()}">
+						verticalScrollPolicy="off">
 					<s:itemRenderer>
 						<fx:Component>
 							<local:DraggableIconItemRenderer decorator="{DragThumb}" />
@@ -98,7 +103,7 @@
 						dropEnabled="true"
 						dragEnabled="true"
 						dragMoveEnabled="true"
-						dataProvider="{rightListSource}">
+						verticalScrollPolicy="off">
 					<s:itemRenderer>
 						<fx:Component>
 							<local:DraggableIconItemRenderer decorator="{DragThumb}" />

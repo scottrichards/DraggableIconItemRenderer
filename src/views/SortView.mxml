@@ -16,6 +16,10 @@
 			rejectCursor: Embed('1x1.gif');
 			linkCursor: Embed('1x1.gif');
 		}
+		
+		.largeFont {
+			fontSize : 50;
+		}
 	</fx:Style>
 	
 	<fx:Script>
@@ -40,19 +44,11 @@
 			[Bindable]
 			private var separatorListSource : ArrayList;
 			
-			private function createDataProvider():ArrayList
-			{
-				var a:Array = new Array();
-				a.push("close but no cigar");
-				a.push("at the eleventh hour");
-				a.push("that's the ticket");
-				
-				return new ArrayList(a);
-			}
+			
 			
 			protected function initializeHandler(event:FlexEvent):void
 			{
-				leftListSource =  new ArrayList(new Array("close but no cigar", "at the eleventh hour", "that's the ticket"));
+				leftListSource =  new ArrayList(new Array("White Hen puts the river in her basket.", "White Hen finds a letter while looking for bugs to eat.", "The flame becomes a pile of ash.","The fox decides to go along with White Hen."));
 				rightListSource = new ArrayList(new Array("at the last minute", "correct answer or idea", "not quite"));
 				separatorListSource = new ArrayList(new Array("<----->", "<----->", "<----->"));
 				
@@ -100,13 +96,13 @@
 	</fx:Script>
 	
 	
-	<s:VGroup paddingLeft="20" paddingRight="20" paddingTop="40" horizontalAlign="center" >
-		<s:Label text="Match each idiom with its meaning" />
+	<s:VGroup paddingLeft="20" paddingRight="20" paddingTop="40" horizontalAlign="center" width="100%" >
+		<s:Label text="Drag the events into the correct order from first at top to last at bottom" />
 		<s:HGroup width="100%" paddingTop="20" >
 			
 			<s:List id="myList" 
 					name="leftList"
-					width="400" 
+					width="100%" 
 					borderColor="#3A3A9A"
 					borderVisible="true"
 					dragEnabled="true" 
@@ -114,40 +110,16 @@
 					dragMoveEnabled="true"
 					dragExit="dragExitHandler(event)"
 					dragOver="dragOverHandler(event);"
+					dataProvider="{leftListSource}"
 					verticalScrollPolicy="off"
-					dataProvider="{leftListSource}">
+					>
 				<s:itemRenderer>
 					<fx:Component>
 						<local:DraggableIconItemRenderer decorator="{DragThumb}" />
 					</fx:Component>
 				</s:itemRenderer>
 			</s:List>
-			<s:Spacer width="10" /> 
-			<s:List
-				id="separator"
-				dataProvider="{separatorListSource}">
-			</s:List>
-			<s:Spacer width="10" /> 
-			<s:VGroup>
-				<s:List id="destlist" width="400" height="100%"
-						name="rightList"
-						borderColor="#3A3A9A"
-						borderVisible="true"
-						dropEnabled="true"
-						dragEnabled="true"
-						dragMoveEnabled="true"
-						dragExit="dragExitHandler(event)"
-						dataProvider="{rightListSource}"
-						verticalScrollPolicy="off"
-						dragOver="dragOverHandler(event);"
-						>
-					<s:itemRenderer>
-						<fx:Component>
-							<local:DraggableIconItemRenderer decorator="{DragThumb}" />
-						</fx:Component>
-					</s:itemRenderer>
-				</s:List>
-			</s:VGroup>
+			
 		</s:HGroup>
 
 	</s:VGroup>
