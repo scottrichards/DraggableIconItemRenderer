@@ -25,38 +25,17 @@
 			import mx.collections.ArrayList;
 			import mx.events.FlexEvent;
 			
-			private var leftListSource : ArrayList;
+			import model.IconItemRendererObject;
+			
 			
 			[Bindable]
-			private var rightListSource : ArrayList;
-			
-			[Bindable]
-			private var dragSourceList : ArrayList;
+			private var dragSourceList : ArrayList;				
 
-			[Bindable]
-			[Embed(source="/icons/DragThumb.png")]
-			private var DragThumbClass:Class;
-			
-			private function createDataProvider():ArrayList
-			{
-				var a:Array = new Array();
-				a.push("close but no cigar");
-				a.push("at the eleventh hour");
-				a.push("that's the ticket");
-				
-				return new ArrayList(a);
-			}
-			
 			protected function initializeHandler(event:FlexEvent):void
 			{
-				rightListSource = new ArrayList(new Array("at the last minute", "correct answer or idea", "not quite"));
-				dragSourceList = new ArrayList(new Array("inside","often","yesterday","there","daily","always","away","near","later","behind"));
+				dragSourceList = IconItemRendererObject.initArrayList(new Array("inside","often","yesterday","there","daily","always","away","near","later","behind"));
 			}
-			
-			public function myIconFunction(item:Object):String {
-				return "DragThumb"; 
-			}
-			
+					
 		]]>
 	</fx:Script>
 	
@@ -78,7 +57,7 @@
 			</s:layout>
 			<s:itemRenderer >
 				<fx:Component>
-					<local:DraggableIconItemRenderer decorator="{DragThumb}" iconPlaceholder="@Embed('icons/DragThumb.png')" iconWidth="30" iconHeight="30" iconField="foobar" />
+					<local:DraggableIconItemRenderer iconPlaceholder="@Embed('icons/DragThumb.png')" iconWidth="60" iconHeight="60" iconField="icon" labelField="label" />
 				</fx:Component>
 			</s:itemRenderer>
 		</s:List>
@@ -93,11 +72,10 @@
 						borderVisible="true"
 						dragEnabled="true" 
 						dropEnabled="true" 
-						dragMoveEnabled="true"
 						verticalScrollPolicy="off">
 					<s:itemRenderer>
 						<fx:Component>
-							<local:DraggableIconItemRenderer decorator="{DragThumb}" />
+							<local:DraggableIconItemRenderer iconPlaceholder="@Embed('icons/DragThumb.png')" iconWidth="60" iconHeight="60" iconField="icon" labelField="label" />
 						</fx:Component>
 					</s:itemRenderer>
 				</s:List>
@@ -110,11 +88,10 @@
 						borderVisible="true"
 						dropEnabled="true"
 						dragEnabled="true"
-						dragMoveEnabled="true"
 						verticalScrollPolicy="off">
 					<s:itemRenderer>
 						<fx:Component>
-							<local:DraggableIconItemRenderer decorator="{DragThumb}" iconPlaceholder="@Embed('icons/DragThumb.png')" />
+							<local:DraggableIconItemRenderer iconPlaceholder="@Embed('icons/DragThumb.png')" iconWidth="60" iconHeight="60" iconField="icon" labelField="label" />
 						</fx:Component>
 					</s:itemRenderer>
 				</s:List>

@@ -14,7 +14,7 @@ package model
 			this.icon = "icons/DragThumb.png";
 		}
 		
-		static public function initArrayList(labelArray:Array) {
+		static public function initArrayList(labelArray:Array):ArrayList {
 			var objectArray :Array = new Array();
 			for each (var label : String in labelArray) {
 				objectArray.push(new IconItemRendererObject(label));

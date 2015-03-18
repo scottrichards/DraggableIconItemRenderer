@@ -122,7 +122,7 @@
 					dataProvider="{leftListSource}">
 				<s:itemRenderer>
 					<fx:Component>
-						<Renderers:MyMXMLItemRenderer />											
+						<Renderers:LabelItemRenderer />											
 					</fx:Component>
 				</s:itemRenderer>
 
@@ -133,7 +133,7 @@
 				dataProvider="{separatorListSource}">
 				<s:itemRenderer>
 					<fx:Component>
-						<Renderers:MyMXMLItemRenderer />
+						<Renderers:ArrowItemRenderer />
 					</fx:Component>
 				</s:itemRenderer>
 			</s:List>
@@ -153,7 +153,7 @@
 						>
 					<s:itemRenderer>
 						<fx:Component>
-							<local:DraggableIconItemRenderer labelField="label" iconField="icon" iconWidth="60" iconHeight="60" />
+							<local:DraggableIconItemRenderer labelField="label" iconField="icon" iconWidth="60" iconHeight="60" fontSize="26" />
 						</fx:Component>
 					</s:itemRenderer>
 				</s:List>

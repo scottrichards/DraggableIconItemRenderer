@@ -24,11 +24,14 @@
 	
 	<fx:Script>
 		<![CDATA[
-			import spark.layouts.supportClasses.DropLocation;
 			import mx.collections.ArrayList;
 			import mx.events.DragEvent;
 			import mx.events.FlexEvent;
 			import mx.managers.DragManager;
+			
+			import spark.layouts.supportClasses.DropLocation;
+			
+			import model.IconItemRendererObject;
 			
 				
 			// Variable to store original border color.
@@ -43,12 +46,14 @@
 			private var rightListSource : ArrayList;
 			[Bindable]
 			private var separatorListSource : ArrayList;
-			
-			
+		
 			
 			protected function initializeHandler(event:FlexEvent):void
 			{
-				leftListSource =  new ArrayList(new Array("White Hen puts the river in her basket.", "White Hen finds a letter while looking for bugs to eat.", "The flame becomes a pile of ash.","The fox decides to go along with White Hen."));
+				leftListSource =  new ArrayList(new Array(	new IconItemRendererObject("White Hen puts the river in her basket."), 
+															new IconItemRendererObject("White Hen finds a letter while looking for bugs to eat."), 
+															new IconItemRendererObject("The flame becomes a pile of ash."),
+															new IconItemRendererObject("The fox decides to go along with White Hen.")));
 				rightListSource = new ArrayList(new Array({label: "at the last minute"}, {label: "correct answer or idea"}, {label: "not quite"}));
 				separatorListSource = new ArrayList(new Array("<----->", "<----->", "<----->"));
 				
@@ -115,7 +120,7 @@
 					>
 				<s:itemRenderer>
 					<fx:Component>
-						<local:DraggableIconItemRenderer decorator="{DragThumb}" />
+						<local:DraggableIconItemRenderer iconPlaceholder="@Embed(source='icons/DragThumb.png')" iconWidth="60" iconHeight="60" fontSize="26" labelField="label" iconField="icon" />
 					</fx:Component>
 				</s:itemRenderer>
 			</s:List>
