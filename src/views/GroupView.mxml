@@ -18,6 +18,12 @@
 			rejectCursor: Embed('1x1.gif');
 			linkCursor: Embed('1x1.gif');
 		}
+		
+		.groupHeader {
+			fontSize : 30;
+			fontWeight : bold;
+			paddingBottom : 10;
+		}
 	</fx:Style>
 	
 	<fx:Script>
@@ -100,71 +106,71 @@
 	
 	<s:VGroup paddingLeft="20" paddingRight="20" paddingTop="40" horizontalAlign="center" >
 		<s:Label text="Drag the adverbs to the correct list" paddingBottom="20" />
+		<s:SkinnableContainer skinClass="skins.ListDropShadow">
+			<s:List dataProvider="{dragSourceList}"
+					dragEnabled="true"
+					dropEnabled="true"
+					dragMoveEnabled="true"
+					dragEnter="sourceDragEnterHandler(event)"
+					dragDrop="sourceDragDropHandler(event)"
+					dragOver="dragOverHandler(event)"
+					width="100%"
+					height="100%"
+					>
+				<s:layout>
+					<s:TileLayout requestedColumnCount="5"
+								  requestedRowCount="2"
+								  horizontalGap="10"
+								  verticalGap="5" />
+				</s:layout>
+				<s:itemRenderer >
+					<fx:Component>
+						<local:DraggableIconItemRenderer iconPlaceholder="@Embed('icons/DragThumb.png')" iconWidth="60" iconHeight="60" iconField="icon" labelField="label" />
+					</fx:Component>
+				</s:itemRenderer>
+			</s:List>
+		</s:SkinnableContainer>
+			
 
-		<s:List dataProvider="{dragSourceList}"
-				dragEnabled="true"
-				dropEnabled="true"
-				dragMoveEnabled="true"
-				dragEnter="sourceDragEnterHandler(event)"
-				dragDrop="sourceDragDropHandler(event)"
-				dragOver="dragOverHandler(event)"
-				width="100%"
-				height="100%"
-				borderColor="#3A3A9A"
-				borderVisible="true"
-				>
-			<s:layout>
-				<s:TileLayout requestedColumnCount="5"
-							  requestedRowCount="2"
-							  horizontalGap="10"
-							  verticalGap="5" />
-			</s:layout>
-			<s:itemRenderer >
-				<fx:Component>
-					<local:DraggableIconItemRenderer iconPlaceholder="@Embed('icons/DragThumb.png')" iconWidth="60" iconHeight="60" iconField="icon" labelField="label" />
-				</fx:Component>
-			</s:itemRenderer>
-		</s:List>
-
-		<s:HGroup width="100%" paddingTop="20" >
+		<s:HGroup width="100%" paddingTop="80" >
 			<s:VGroup>
 				
-				<s:Label text="When" />
-				<s:List id="whenList" 
-						width="400" 
-						borderColor="#3A3A9A"
-						borderVisible="true"
-						dragEnabled="true" 
-						dropEnabled="true"
-						dragMoveEnabled="true"
-						verticalScrollPolicy="off"
-						dragOver="dragOverHandler(event)"
-						dragDrop="groupDragDropHandler(event)"
-						>
-					<s:itemRenderer>
-						<fx:Component>
-							<local:DraggableIconItemRenderer iconPlaceholder="@Embed('icons/DragThumb.png')" iconWidth="60" iconHeight="60" iconField="icon" labelField="label" />
-						</fx:Component>
-					</s:itemRenderer>
-				</s:List>
+				<s:Label text="When" width="100%" textAlign="center" styleName="groupHeader" />
+				<s:SkinnableContainer skinClass="skins.ListDropShadow">
+					<s:List id="whenList" 
+							width="400" 
+							dragEnabled="true" 
+							dropEnabled="true"
+							dragMoveEnabled="true"
+							verticalScrollPolicy="off"
+							dragOver="dragOverHandler(event)"
+							dragDrop="groupDragDropHandler(event)"
+							>
+						<s:itemRenderer>
+							<fx:Component>
+								<local:DraggableIconItemRenderer iconPlaceholder="@Embed('icons/DragThumb.png')" iconWidth="60" iconHeight="60" iconField="icon" labelField="label" />
+							</fx:Component>
+						</s:itemRenderer>
+					</s:List>
+				</s:SkinnableContainer>
 			</s:VGroup>
 			<s:Spacer width="60" />
 			<s:VGroup>
-				<s:Label text="Where" />
-				<s:List id="whereList" width="400" height="100%"
-						borderColor="#3A3A9A"
-						borderVisible="true"
-						dropEnabled="true"
-						dragEnabled="true"
-						dragMoveEnabled="true"
-						dragOver="dragOverHandler(event)"
-						verticalScrollPolicy="off">
-					<s:itemRenderer>
-						<fx:Component>
-							<local:DraggableIconItemRenderer iconPlaceholder="@Embed('icons/DragThumb.png')" iconWidth="60" iconHeight="60" iconField="icon" labelField="label" />
-						</fx:Component>
-					</s:itemRenderer>
-				</s:List>
+				<s:Label text="Where" width="100%" textAlign="center" styleName="groupHeader" />
+				<s:SkinnableContainer skinClass="skins.ListDropShadow">
+					<s:List id="whereList" width="400" height="100%"
+							dropEnabled="true"
+							dragEnabled="true"
+							dragMoveEnabled="true"
+							dragOver="dragOverHandler(event)"
+							verticalScrollPolicy="off">
+						<s:itemRenderer>
+							<fx:Component>
+								<local:DraggableIconItemRenderer iconPlaceholder="@Embed('icons/DragThumb.png')" iconWidth="60" iconHeight="60" iconField="icon" labelField="label" />
+							</fx:Component>
+						</s:itemRenderer>
+					</s:List>
+				</s:SkinnableContainer>
 			</s:VGroup>
 		</s:HGroup>
 

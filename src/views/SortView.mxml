@@ -104,8 +104,7 @@
 	<s:VGroup paddingLeft="20" paddingRight="20" paddingTop="40" horizontalAlign="center" width="100%" >
 		<s:Label text="Drag the events into the correct order from first at top to last at bottom" />
 		<s:HGroup width="100%" paddingTop="20" >
-			<s:SkinnableContainer id="myContainer" 
-								  
+			<s:SkinnableContainer id="myContainer"
 								  skinClass="skins.ListSkin">
 				<s:List id="myList" 
 						name="leftList"
