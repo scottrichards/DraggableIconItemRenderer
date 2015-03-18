@@ -155,9 +155,10 @@ package
 				
 				var labelDragRegionWidth:Number = this.measuredWidth;
 				var labelDragRegionHeight:Number = this.measuredHeight;
-				trace("Icon Item Renderer Label: " + this.label + " X: " + this.getLayoutBoundsX() + " Y: " + this.getLayoutBoundsY() + " Width: " + labelDragRegionWidth + " Height: " + labelDragRegionHeight)
+//				trace("Icon Item Renderer Label: " + this.label + " X: " + this.getLayoutBoundsX() + " Y: " + this.getLayoutBoundsY() + " Width: " + labelDragRegionWidth + " Height: " + labelDragRegionHeight)
 				// draw an invisible mouse event shield on top of the decoratorDisplay
 				labelDragRegion.graphics.clear();
+	//			This draws a red rectangle around the label			
 	//			labelDragRegion.graphics.lineStyle(2, 0x990000, .75);
 				labelDragRegion.graphics.beginFill(0xFF0000, 0);
 				labelDragRegion.graphics.drawRect(0, 

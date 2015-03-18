@@ -20,11 +20,14 @@
 	
 	<fx:Script>
 		<![CDATA[
-			import spark.layouts.supportClasses.DropLocation;
 			import mx.collections.ArrayList;
 			import mx.events.DragEvent;
 			import mx.events.FlexEvent;
 			import mx.managers.DragManager;
+			
+			import spark.layouts.supportClasses.DropLocation;
+			
+			import model.IconItemRendererObject;
 			
 				
 			// Variable to store original border color.
@@ -56,8 +59,7 @@
 			protected function initializeHandler(event:FlexEvent):void
 			{
 				leftListSource =  new ArrayList(new Array("close but no cigar", "at the eleventh hour", "that's the ticket"));
-//				rightListSource = new ArrayList(new Array("at the last minute", "correct answer or idea", "not quite"));
-				rightListSource = new ArrayList(new Array({label: "at the last minute", icon: "/icons/DragThumb.png"}, {label: "correct answer or idea", icon : "/icons/DragThumb.png"}, {label: "not quite", icon: "/icons/DragThumb.png"}));
+				rightListSource = IconItemRendererObject.initArrayList(new Array("at the last minute","correct answer or idea", "not quite"));
 				separatorListSource = new ArrayList(new Array("<----->", "<----->", "<----->"));
 				
 			}
@@ -97,8 +99,6 @@
 					DragManager.showFeedback(DragManager.MOVE);
 				}              
 			}
-			
-
 			
 		]]>
 	</fx:Script>

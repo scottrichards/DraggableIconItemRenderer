@@ -23,7 +23,12 @@
 	<fx:Script>
 		<![CDATA[
 			import mx.collections.ArrayList;
+			import mx.core.IUIComponent;
+			import mx.events.DragEvent;
 			import mx.events.FlexEvent;
+			import mx.managers.DragManager;
+			
+			import spark.layouts.supportClasses.DropLocation;
 			
 			import model.IconItemRendererObject;
 			
@@ -35,7 +40,60 @@
 			{
 				dragSourceList = IconItemRendererObject.initArrayList(new Array("inside","often","yesterday","there","daily","always","away","near","later","behind"));
 			}
-					
+			
+			protected function sourceDragEnterHandler(event:DragEvent):void
+			{
+				trace("drag Enter Handler");
+				if (event.target != event.dragInitiator && event.target !=
+					event.dragInitiator.owner) {
+					DragManager.acceptDragDrop(event.target as IUIComponent);
+					DragManager.showFeedback(DragManager.MOVE);
+				} else {
+					DragManager.showFeedback(DragManager.NONE);
+				}
+			}
+			
+			private function sourceDragDropHandler(event:DragEvent):void {
+				trace("SOURCE drag Drop Handler");
+				var val:Object = event.dragSource.dataForFormat("listData");
+				(event.target as List).dataProvider.addItem(val);
+	//			glowFilter.play();
+			}
+			
+			
+			private function groupDragDropHandler(event:DragEvent):void {
+				trace("GROUP drag Drop Handler");
+				var val:Object = event.dragSource.dataForFormat("listData");
+				if (val)
+					(event.target as List).dataProvider.addItem(val);
+					//			glowFilter.play();
+			}
+				
+			// allow dragging from any group to any other group but prevent it from within a group 
+			protected function dragOverHandler(event:DragEvent):void
+			{
+				// Explpicitly handle the dragOver event.            
+				event.preventDefault();
+				
+				// Since you are explicitly handling the dragOver event,
+				// call showDropIndicator() to have the drop target
+				// display the drop indicator.
+				// The drop indicator is removed
+				// automatically for the list controls by the built-in 
+				// event handler for the dragDrop event.
+				var dropLocal:DropLocation = 
+					event.currentTarget.layout.calculateDropLocation(event);
+				event.currentTarget.layout.showDropIndicator(dropLocal);
+				
+				// if the drag initiated from anything other than the current list allow it (we only allow moving items between groups not re-ordering items in a group)
+				if (event.dragInitiator.name == event.currentTarget.name) {
+					// Drag not allowed.
+					DragManager.showFeedback(DragManager.NONE); 
+				} else {
+					DragManager.showFeedback(DragManager.MOVE);
+				}  
+			}
+			
 		]]>
 	</fx:Script>
 	
@@ -46,8 +104,14 @@
 		<s:List dataProvider="{dragSourceList}"
 				dragEnabled="true"
 				dropEnabled="true"
+				dragMoveEnabled="true"
+				dragEnter="sourceDragEnterHandler(event)"
+				dragDrop="sourceDragDropHandler(event)"
+				dragOver="dragOverHandler(event)"
 				width="100%"
-				height="100%" 
+				height="100%"
+				borderColor="#3A3A9A"
+				borderVisible="true"
 				>
 			<s:layout>
 				<s:TileLayout requestedColumnCount="5"
@@ -66,13 +130,17 @@
 			<s:VGroup>
 				
 				<s:Label text="When" />
-				<s:List id="myList" 
+				<s:List id="whenList" 
 						width="400" 
 						borderColor="#3A3A9A"
 						borderVisible="true"
 						dragEnabled="true" 
-						dropEnabled="true" 
-						verticalScrollPolicy="off">
+						dropEnabled="true"
+						dragMoveEnabled="true"
+						verticalScrollPolicy="off"
+						dragOver="dragOverHandler(event)"
+						dragDrop="groupDragDropHandler(event)"
+						>
 					<s:itemRenderer>
 						<fx:Component>
 							<local:DraggableIconItemRenderer iconPlaceholder="@Embed('icons/DragThumb.png')" iconWidth="60" iconHeight="60" iconField="icon" labelField="label" />
@@ -83,11 +151,13 @@
 			<s:Spacer width="60" />
 			<s:VGroup>
 				<s:Label text="Where" />
-				<s:List id="destlist" width="400" height="100%"
+				<s:List id="whereList" width="400" height="100%"
 						borderColor="#3A3A9A"
 						borderVisible="true"
 						dropEnabled="true"
 						dragEnabled="true"
+						dragMoveEnabled="true"
+						dragOver="dragOverHandler(event)"
 						verticalScrollPolicy="off">
 					<s:itemRenderer>
 						<fx:Component>
