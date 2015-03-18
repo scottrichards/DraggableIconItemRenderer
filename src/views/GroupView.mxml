@@ -32,9 +32,6 @@
 			
 			[Bindable]
 			private var dragSourceList : ArrayList;
-			
-			[Embed(source="/icons/Box50.png")]
-			private var LeftThumbnail:Class;
 
 			[Bindable]
 			[Embed(source="/icons/DragThumb.png")]

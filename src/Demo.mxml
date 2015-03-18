@@ -9,7 +9,6 @@
 	<fx:Script>
 		<![CDATA[
 			import mx.events.FlexEvent;
-			import views.MatchingView;
 			
 			protected function appInitHandler(event:FlexEvent):void
 			{
@@ -22,5 +21,6 @@
 	<s:ViewNavigator label="Match" firstView="views.MatchingView" />
 	<s:ViewNavigator label="Group" firstView="views.GroupView" />
 	<s:ViewNavigator label="Sort" firstView="views.SortView" />
-  
+	<s:ViewNavigator label="Custom" firstView="views.CustomItem" />
+	
 </s:TabbedViewNavigatorApplication>

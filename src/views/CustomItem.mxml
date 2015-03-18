@@ -17,9 +17,17 @@
 			linkCursor: Embed('1x1.gif');
 		}
 	</fx:Style>
-	
+	<fx:Declarations>
+		<s:AnimateFilter id="glowFilter" target="{myList}"
+						 bitmapFilter="{filter}"/>
+		<s:GlowFilter id="filter"/>
+		
+	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import mx.core.IDataRenderer;
+			import mx.core.DragSource;
+			import mx.core.IUIComponent;
 			import spark.layouts.supportClasses.DropLocation;
 			import mx.collections.ArrayList;
 			import mx.events.DragEvent;
@@ -98,7 +106,45 @@
 				}              
 			}
 			
-
+			private function dragBegin(event:MouseEvent):void {
+				var target:IUIComponent = event.target as IUIComponent;
+				if (target) {
+					target.addEventListener(DragEvent.DRAG_COMPLETE, dragCompleteHandler);
+					var source:DragSource = new DragSource();
+					source.addData((target as IDataRenderer).data, "listData");
+					DragManager.doDrag(target, source, event);
+				}
+			}
+			
+			private function dragCompleteHandler(event:DragEvent):void {
+				if(event.action != DragManager.NONE) {
+					event.target.removeEventListener(DragEvent.DRAG_COMPLETE,
+						dragCompleteHandler);
+					var list:List = (event.target.owner as List);
+					var data:Object = event.dragSource.dataForFormat("listData");
+					list.dataProvider.removeItemAt(
+						list.dataProvider.getItemIndex(data) );
+				}
+				
+			}
+			
+			private function dragEnterHandler(event:DragEvent):void {
+				if(event.target != event.dragInitiator && event.target !=
+					event.dragInitiator.owner) {
+					DragManager.acceptDragDrop(event.target as IUIComponent);
+					DragManager.showFeedback(DragManager.MOVE);
+				} else {
+					DragManager.showFeedback(DragManager.NONE);
+				}
+			}
+			
+			private function dragDropHandler(event:DragEvent):void {
+				var val:Object = event.dragSource.dataForFormat("listData");
+				(event.target as List).dataProvider.addItem(val);
+				glowFilter.play();
+			}
+			
+	
 			
 		]]>
 	</fx:Script>
@@ -113,12 +159,10 @@
 					width="400" 
 					borderColor="#3A3A9A"
 					borderVisible="true"
-					dragEnabled="true" 
-					dropEnabled="true"
-					dragMoveEnabled="true"
-					dragExit="dragExitHandler(event)"
-					dragOver="dragOverHandler(event);"
 					verticalScrollPolicy="off"
+					mouseDown="dragBegin(event)"
+					dragEnter="dragEnterHandler(event)"
+					dragDrop="dragDropHandler(event)"
 					dataProvider="{leftListSource}">
 				<s:itemRenderer>
 					<fx:Component>
@@ -128,34 +172,23 @@
 
 			</s:List>
 			<s:Spacer width="10" /> 
-			<s:List
-				id="separator"
-				dataProvider="{separatorListSource}">
-				<s:itemRenderer>
-					<fx:Component>
-						<Renderers:MyMXMLItemRenderer />
-					</fx:Component>
-				</s:itemRenderer>
-			</s:List>
 			<s:Spacer width="10" /> 
 			<s:VGroup>
 				<s:List id="destlist" width="400" height="100%"
 						name="rightList"
 						borderColor="#3A3A9A"
 						borderVisible="true"
-						dropEnabled="true"
-						dragEnabled="true"
-						dragMoveEnabled="true"
-						dragExit="dragExitHandler(event)"
-						dataProvider="{rightListSource}"
+						itemRenderer="Renderers.MyMXMLItemRenderer"
+
+						mouseDown="dragBegin(event)"
+						dragEnter="dragEnterHandler(event)"
+						dragDrop="dragDropHandler(event)"
 						verticalScrollPolicy="off"
-						dragOver="dragOverHandler(event);"
 						>
-					<s:itemRenderer>
-						<fx:Component>
-							<local:DraggableIconItemRenderer labelField="label" iconField="icon" iconWidth="60" iconHeight="60" />
-						</fx:Component>
-					</s:itemRenderer>
+					<s:dataProvider>
+						<!-- empty arraylist -->
+						<s:ArrayList/>
+					</s:dataProvider>
 				</s:List>
 			</s:VGroup>
 		</s:HGroup>
