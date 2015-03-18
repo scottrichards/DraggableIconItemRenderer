@@ -18,20 +18,14 @@
 		<s:State name="dragging"/> 
 	</s:states> 
 	
-	<s:Rect>
+<!--	<s:Rect left="0" right="0" top="0" bottom="0">
 		<s:stroke>
-			<s:SolidColorStroke id="strokeColor" weight="1" color="#000000" />
+			<s:SolidColorStroke id="strokeColor" weight="3" color="#000000" />
 		</s:stroke>
 	</s:Rect>
-	<s:HGroup>
-		<graphics:DragThumb />
-		<s:Label id="labelDisplay" 
-				 verticalCenter="0" 
-				 
-				 left="3" right="3" top="6" bottom="4" 
-				 fontSize.hovered='14' fontStyle.hovered="italic" 
-				 fontWeight.dragging="bold"/>
-		
-	</s:HGroup>
+	-->
+	<s:VGroup height="100%" verticalAlign="middle">
+		<s:Image source="@Embed('icons/arrow.png')" />
+	</s:VGroup>
 
 </s:ItemRenderer>

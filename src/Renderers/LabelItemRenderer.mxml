@@ -13,7 +13,6 @@
 	</fx:Script>
 	<s:states> 
 		<s:State name="normal"/> 
-		<s:State name="hovered"/> 
 		<s:State name="selected"/>
 		<s:State name="dragging"/> 
 	</s:states> 
@@ -23,13 +22,13 @@
 			<s:SolidColorStroke id="strokeColor" weight="1" color="#000000" />
 		</s:stroke>
 	</s:Rect>
-	<s:HGroup>
-		<graphics:DragThumb />
+	<s:HGroup  height="100%" width="100%" verticalAlign="middle" paddingRight="20">
 		<s:Label id="labelDisplay" 
-				 verticalCenter="0" 
-				 
-				 left="3" right="3" top="6" bottom="4" 
-				 fontSize.hovered='14' fontStyle.hovered="italic" 
+				 verticalCenter="0"
+				 textAlign="right"
+				 width="100%"
+				 fontSize="26"
+				 fontSize.dragging='14' fontStyle.dragging="italic" 
 				 fontWeight.dragging="bold"/>
 		
 	</s:HGroup>

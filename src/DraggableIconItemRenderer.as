@@ -7,7 +7,6 @@ package
     
     import spark.components.IconItemRenderer;
     import spark.components.List;
-    import spark.skins.spark.ScrollerSkin;
     
     /**
     * A subclass of IconItemRenderer that allows the decorator object to
