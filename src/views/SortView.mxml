@@ -104,27 +104,27 @@
 	<s:VGroup paddingLeft="20" paddingRight="20" paddingTop="40" horizontalAlign="center" width="100%" >
 		<s:Label text="Drag the events into the correct order from first at top to last at bottom" />
 		<s:HGroup width="100%" paddingTop="20" >
-			
-			<s:List id="myList" 
-					name="leftList"
-					width="100%" 
-					borderColor="#3A3A9A"
-					borderVisible="true"
-					dragEnabled="true" 
-					dropEnabled="true"
-					dragMoveEnabled="true"
-					dragExit="dragExitHandler(event)"
-					dragOver="dragOverHandler(event);"
-					dataProvider="{leftListSource}"
-					verticalScrollPolicy="off"
-					>
-				<s:itemRenderer>
-					<fx:Component>
-						<local:DraggableIconItemRenderer iconPlaceholder="@Embed(source='icons/DragThumb.png')" iconWidth="60" iconHeight="60" fontSize="26" labelField="label" iconField="icon" />
-					</fx:Component>
-				</s:itemRenderer>
-			</s:List>
-			
+			<s:SkinnableContainer id="myContainer" 
+								  
+								  skinClass="skins.ListSkin">
+				<s:List id="myList" 
+						name="leftList"
+						width="100%" 
+						dragEnabled="true" 
+						dropEnabled="true"
+						dragMoveEnabled="true"
+						dragExit="dragExitHandler(event)"
+						dragOver="dragOverHandler(event);"
+						dataProvider="{leftListSource}"
+						verticalScrollPolicy="off"
+						>
+					<s:itemRenderer>
+						<fx:Component>
+							<local:DraggableIconItemRenderer iconPlaceholder="@Embed(source='icons/DragThumb.png')" iconWidth="60" iconHeight="60" fontSize="26" labelField="label" iconField="icon" />
+						</fx:Component>
+					</s:itemRenderer>
+				</s:List>
+			</s:SkinnableContainer>
 		</s:HGroup>
 
 	</s:VGroup>

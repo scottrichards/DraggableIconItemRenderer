@@ -18,20 +18,16 @@
 	name=dataGroup, type=spark.components.DataGroup, required=false
 	-->
 	
-	<s:states>
-		<s:State name="normal" />
-		<s:State name="disabled" />
-	</s:states>
 	
-	<s:Group id="contentGroup" left="1" right="1" top="1" bottom="1">
+	<s:Group id="contentGroup" left="2" right="2" top="2" bottom="2">
 		<s:layout>
 			<s:VerticalLayout/>
 		</s:layout>
 	</s:Group>
 	
-	<s:Rect left="0" right="0" top="0" bottom="0">
+	<s:Rect left="0" right="0" top="0" bottom="0" radiusX="10" radiusY="10">
 		<s:stroke>
-			<s:SolidColorStroke color="0x000000" weight="1"/>
+			<s:SolidColorStroke color="0x222222" weight="2"/>
 		</s:stroke>
 	</s:Rect>
 </s:Skin>
