@@ -49,7 +49,7 @@
 			protected function initializeHandler(event:FlexEvent):void
 			{
 				leftListSource =  new ArrayList(new Array("White Hen puts the river in her basket.", "White Hen finds a letter while looking for bugs to eat.", "The flame becomes a pile of ash.","The fox decides to go along with White Hen."));
-				rightListSource = new ArrayList(new Array("at the last minute", "correct answer or idea", "not quite"));
+				rightListSource = new ArrayList(new Array({label: "at the last minute"}, {label: "correct answer or idea"}, {label: "not quite"}));
 				separatorListSource = new ArrayList(new Array("<----->", "<----->", "<----->"));
 				
 			}

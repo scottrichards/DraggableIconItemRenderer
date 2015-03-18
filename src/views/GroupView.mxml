@@ -33,6 +33,13 @@
 			[Bindable]
 			private var dragSourceList : ArrayList;
 			
+			[Embed(source="/icons/Box50.png")]
+			private var LeftThumbnail:Class;
+
+			[Bindable]
+			[Embed(source="/icons/DragThumb.png")]
+			private var DragThumbClass:Class;
+			
 			private function createDataProvider():ArrayList
 			{
 				var a:Array = new Array();
@@ -49,6 +56,10 @@
 				dragSourceList = new ArrayList(new Array("inside","often","yesterday","there","daily","always","away","near","later","behind"));
 			}
 			
+			public function myIconFunction(item:Object):String {
+				return "DragThumb"; 
+			}
+			
 		]]>
 	</fx:Script>
 	
@@ -60,7 +71,7 @@
 				dragEnabled="true"
 				dropEnabled="true"
 				width="100%"
-				height="100%"
+				height="100%" 
 				>
 			<s:layout>
 				<s:TileLayout requestedColumnCount="5"
@@ -68,9 +79,9 @@
 							  horizontalGap="10"
 							  verticalGap="5" />
 			</s:layout>
-			<s:itemRenderer>
+			<s:itemRenderer >
 				<fx:Component>
-					<local:DraggableIconItemRenderer decorator="{DragThumb}" />
+					<local:DraggableIconItemRenderer decorator="{DragThumb}" iconPlaceholder="@Embed('icons/DragThumb.png')" iconWidth="30" iconHeight="30" iconField="foobar" />
 				</fx:Component>
 			</s:itemRenderer>
 		</s:List>
@@ -106,7 +117,7 @@
 						verticalScrollPolicy="off">
 					<s:itemRenderer>
 						<fx:Component>
-							<local:DraggableIconItemRenderer decorator="{DragThumb}" />
+							<local:DraggableIconItemRenderer decorator="{DragThumb}" iconPlaceholder="@Embed('icons/DragThumb.png')" />
 						</fx:Component>
 					</s:itemRenderer>
 				</s:List>

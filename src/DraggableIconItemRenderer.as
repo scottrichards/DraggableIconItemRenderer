@@ -30,13 +30,33 @@ package
         public var extraDragThumbHitPaddingTop:Number = 0;
         public var extraDragThumbHitPaddingRight:Number = 0;
         public var extraDragThumbHitPaddingBottom:Number = 0;
+		
+		
+		[Embed(source="/icons/DragThumb.png")]
+		private var DragThumbClass:Class;
         
         /** A lightweight class that can handle mouse events */
         private var dragRegion:Sprite;
+		
+		/** A lightweight class that can handle mouse events */
+		private var labelDragRegion:Sprite;
         
         /** The skin that the Scroller had before being changed to the drag mode scroller skin */
         private var initialScrollerSkin:*;
         
+		override protected function createChildren():void { 
+			
+			// Call the createChildren() method of the superclass. 
+			super.createChildren(); 
+			trace("Create Children");
+			if (!labelDragRegion)
+			{
+				labelDragRegion = new Sprite();
+				labelDragRegion.addEventListener(MouseEvent.MOUSE_DOWN, handleDragRegionMouseDown);
+				addChild(labelDragRegion);
+			}
+		}
+		
         /**
         * Create a dragRegion when the decorator gets created.
         */
@@ -132,6 +152,22 @@ package
                                              dragRegionHeight);
                 dragRegion.graphics.endFill();
             }
+			if (labelDragRegion) {
+				
+				var labelDragRegionWidth:Number = this.measuredWidth;
+				var labelDragRegionHeight:Number = this.measuredHeight;
+				trace("Icon Item Renderer Label: " + this.label + " X: " + this.getLayoutBoundsX() + " Y: " + this.getLayoutBoundsY() + " Width: " + labelDragRegionWidth + " Height: " + labelDragRegionHeight)
+				// draw an invisible mouse event shield on top of the decoratorDisplay
+				labelDragRegion.graphics.clear();
+				labelDragRegion.graphics.lineStyle(2, 0x990000, .75);
+				labelDragRegion.graphics.beginFill(0xFF0000, 0);
+				labelDragRegion.graphics.drawRect(0, 
+					0, 
+					labelDragRegionWidth, 
+					labelDragRegionHeight);
+				labelDragRegion.graphics.endFill();
+				
+			}
         }
         
     }

@@ -2,7 +2,7 @@
 <s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		xmlns:s="library://ns.adobe.com/flex/spark" 
 		title="MatchingView"
-		initialize="initializeHandler(event)" xmlns:local="*">
+		initialize="initializeHandler(event)" xmlns:local="*" xmlns:Renderers="Renderers.*">
 	<s:layout>
 		<s:VerticalLayout/>
 	</s:layout>
@@ -33,6 +33,9 @@
 			// Flag to indicate that tempBorderColor has been set.
 			private var borderColorSet:Boolean = false;
 			
+			[Embed(source="/icons/DragThumb.png")]
+			private var DragThumbClass:Class;
+			
 			[Bindable]
 			private var leftListSource : ArrayList;
 			[Bindable]
@@ -53,7 +56,8 @@
 			protected function initializeHandler(event:FlexEvent):void
 			{
 				leftListSource =  new ArrayList(new Array("close but no cigar", "at the eleventh hour", "that's the ticket"));
-				rightListSource = new ArrayList(new Array("at the last minute", "correct answer or idea", "not quite"));
+//				rightListSource = new ArrayList(new Array("at the last minute", "correct answer or idea", "not quite"));
+				rightListSource = new ArrayList(new Array({label: "at the last minute", icon: "/icons/DragThumb.png"}, {label: "correct answer or idea", icon : "/icons/DragThumb.png"}, {label: "not quite", icon: "/icons/DragThumb.png"}));
 				separatorListSource = new ArrayList(new Array("<----->", "<----->", "<----->"));
 				
 			}
@@ -118,14 +122,20 @@
 					dataProvider="{leftListSource}">
 				<s:itemRenderer>
 					<fx:Component>
-						<local:DraggableIconItemRenderer decorator="{DragThumb}" />
+						<Renderers:MyMXMLItemRenderer />											
 					</fx:Component>
 				</s:itemRenderer>
+
 			</s:List>
 			<s:Spacer width="10" /> 
 			<s:List
 				id="separator"
 				dataProvider="{separatorListSource}">
+				<s:itemRenderer>
+					<fx:Component>
+						<Renderers:MyMXMLItemRenderer />
+					</fx:Component>
+				</s:itemRenderer>
 			</s:List>
 			<s:Spacer width="10" /> 
 			<s:VGroup>
@@ -143,7 +153,7 @@
 						>
 					<s:itemRenderer>
 						<fx:Component>
-							<local:DraggableIconItemRenderer decorator="{DragThumb}" />
+							<local:DraggableIconItemRenderer decorator="{DragThumb}" labelField="label" iconField="icon" iconWidth="60" iconHeight="60" />
 						</fx:Component>
 					</s:itemRenderer>
 				</s:List>
